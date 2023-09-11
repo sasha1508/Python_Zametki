@@ -131,6 +131,7 @@ while True:
     printFilter("2023.09.10")
     print("Описание команд:")
     print("print - отобразить все заметки")
+    print("prnID - отобразить заметку с указанным ID")
     print("add - добавить заметку")
     print("edit - редактировать заметку")
     print("del - удалить заметку")
@@ -144,6 +145,10 @@ while True:
             printAll()
         else:
             printFilter(filter)
+        input()
+    if inputString == "prnID": 
+        ID = input("Введите ID отображаемой заметки: ")
+        printFromID(ID)
         input()
     if inputString == "add": 
         title = input("Введите заголовок заметки: ")
