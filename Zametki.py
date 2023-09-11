@@ -2,6 +2,8 @@ import subprocess
 import os
 import json
 import datetime
+from datetime import datetime
+
 
 def add(title, massage):
     zametki = []
@@ -67,6 +69,19 @@ def printAll():
         print(zametka["date"])
         print("")
 
+def printFilter(date):
+    zametki = read()
+    for zametka in zametki:
+        date_string = zametka["date"]
+        date_object = datetime.strptime(date_string, "%a %b %d %H:%M:%S %Y")
+        Date_day = date_object.strftime("%Y") + "." + date_object.strftime("%m") + "." + date_object.strftime("%d")
+        if date == Date_day:
+            print(Date_day)
+            print(str(zametka["ID"]) + " - " + str(zametka["title"]))
+            print(zametka["massage"])
+            print(zametka["date"])
+            print("")
+
 def printFromID(ID):
     zametki = read()
     for zametka in zametki:
@@ -112,6 +127,8 @@ def CreateID(readZametki):
 
 while True:
     subprocess.call('clear' if os.name =='posix' else 'cls', shell=True)    # Очистка консоли
+
+    printFilter("2023.09.10")
     print("Описание команд:")
     print("print - отобразить все заметки")
     print("add - добавить заметку")
@@ -122,7 +139,11 @@ while True:
     inputString = input()
     if inputString == "exit": break
     if inputString == "print": 
-        printAll()
+        filter = input("Введите параметры фильтра (all - печать всех заметок, <Дата> - печать заметок на указанную дату [пример - 2023.09.25]):")
+        if filter == "all":
+            printAll()
+        else:
+            printFilter(filter)
         input()
     if inputString == "add": 
         title = input("Введите заголовок заметки: ")
